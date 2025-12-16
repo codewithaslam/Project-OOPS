@@ -1,117 +1,115 @@
 🎨 Swing Paint – Java Drawing Application
 
-A simple Java Swing-based paint application that allows users to draw freehand sketches and shapes with customizable colors, thickness, and fill options. This project demonstrates the use of Java Swing, AWT graphics, mouse events, and basic UI controls.
+  A simple Java Swing-based paint application that allows users to draw freehand sketches and shapes with customizable colors, thickness, and fill options. This project demonstrates the use of Java Swing, AWT graphics, mouse events, and basic UI controls.
 
 📌 Features
 
-🖌 Freehand drawing using the mouse
+  🖌 Freehand drawing using the mouse
 
-🔲 Draw Rectangles and 🔵 Ovals
+  🔲 Draw Rectangles and 🔵 Ovals
 
-🎨 Color picker using JColorChooser
+  🎨 Color picker using JColorChooser
 
-✏️ Adjustable pen thickness with a slider
+  ✏️ Adjustable pen thickness with a slider
 
-🧽 Eraser tool for removing drawings
+  🧽 Eraser tool for removing drawings
 
-🟦 Fill option for shapes
+  🟦 Fill option for shapes
 
-👁 Live shape preview while dragging the mouse
+  👁 Live shape preview while dragging the mouse
 
-🖼 Uses an off-screen BufferedImage for smooth drawing
+  🖼 Uses an off-screen BufferedImage for smooth drawing
+
 
 🛠 Technologies Used
 
-Java
+  Java
 
-Java Swing
+  Java Swing
 
-AWT Graphics
+  AWT Graphics
 
-BufferedImage
+  BufferedImage
 
-Mouse & Event Handling
+  Mouse & Event Handling
+
 
 🚀 How to Run the Project
 
-Clone the repository
+  Clone the repository
 
-git clone https://github.com/your-username/swing-paint.git
-
-
-Navigate to the project folder
-
-cd swing-paint
+    git clone https://github.com/your-username/swing-paint.git
 
 
-Compile the program
+  Navigate to the project folder
 
-javac SwingPaint.java
+    cd swing-paint
 
 
-Run the application
+  Compile the program
 
-java SwingPaint
+    javac SwingPaint.java
 
-🧩 Controls Overview
-Control	Description
-Select Color	Choose drawing color
-Eraser	Erase drawings (freehand only)
-Shape Selector	Switch between Freehand, Rectangle, Oval
-Fill Button	Fill shapes with selected color
-Thickness Slider	Adjust stroke thickness
+
+  Run the application
+
+    java SwingPaint
+
+  
 🖥 Application Workflow
 
-Select a color
+  Select a color
 
-Choose a drawing mode
+  Choose a drawing mode
 
-Adjust thickness
+  Adjust thickness
 
-Click and drag on the canvas to draw
+  Click and drag on the canvas to draw
 
-Enable Fill for solid shapes
+  Enable Fill for solid shapes
 
-Use Eraser to remove content
+  Use Eraser to remove content
 
 📂 Project Structure
-SwingPaint.java
+  SwingPaint.java
 
 
-SwingPaint – Main application class
+    SwingPaint – Main application class
 
-DrawArea – Custom JPanel handling drawing logic
+    DrawArea – Custom JPanel handling drawing logic
 
-Uses BufferedImage as a drawing canvas
+    Uses BufferedImage as a drawing canvas
+
 
 🎯 Learning Outcomes
 
-Understanding Java Swing layouts and components
+  Understanding Java Swing layouts and components
 
-Handling mouse events for drawing applications
+  Handling mouse events for drawing applications
 
-Working with Graphics2D and custom painting
+  Working with Graphics2D and custom painting
 
-Implementing UI controls like sliders, toggle buttons, and combo boxes
+  Implementing UI controls like sliders, toggle buttons, and combo boxes
 
-📸 Screenshots (Optional)
-
-Add screenshots here to visually demonstrate the application.
 
 📜 License
 
-This project is open-source and available for educational purposes.
+  This project is open-source and available for educational purposes.
 
 🤝 Contributions
 
-Feel free to fork this repository and improve the application by adding:
+  Feel free to fork this repository and improve the application by adding:
 
-Save/Open functionality
+  Save/Open functionality
 
-Undo/Redo
+  Undo/Redo
+  
+  More shapes
 
-More shapes
+  Zoom support
 
-Zoom support
+
+⭐ If you like this project, don’t forget to star the repository!
+
 
 ⭐ If you like this project, don’t forget to star the repository!
