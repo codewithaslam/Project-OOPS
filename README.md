@@ -1,235 +1,117 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
+🎨 Swing Paint – Java Drawing Application
 
-public class SwingPaint {
+A simple Java Swing-based paint application that allows users to draw freehand sketches and shapes with customizable colors, thickness, and fill options. This project demonstrates the use of Java Swing, AWT graphics, mouse events, and basic UI controls.
 
-    private static Color currentColor = Color.BLACK;
-    private static final Color BACKGROUND_COLOR = Color.WHITE;
-    private static boolean isErasing = false;
-    private static int currentThickness = 5; // Default pen thickness
+📌 Features
 
-    // New variables for shape drawing
-    private static String drawingMode = "freehand"; // "freehand", "rectangle", "oval"
-    private static boolean isFilling = false;
-    private static JToggleButton fillButton;
-    private static JComboBox<String> shapeSelector;
+🖌 Freehand drawing using the mouse
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Basic Java Paint with Controls");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(800, 600);
+🔲 Draw Rectangles and 🔵 Ovals
 
-            // Create the drawing area
-            DrawArea drawArea = new DrawArea();
+🎨 Color picker using JColorChooser
 
-            // Create the control panel for buttons and slider
-            JPanel controls = new JPanel();
-            JButton colorButton = new JButton("Select Color");
-            JToggleButton eraseButton = new JToggleButton("Eraser");
+✏️ Adjustable pen thickness with a slider
 
-            // New JComboBox for shape selection
-            String[] shapeOptions = {"Freehand", "Rectangle", "Oval"};
-            shapeSelector = new JComboBox<>(shapeOptions);
+🧽 Eraser tool for removing drawings
 
-            // Toggle button for filling shapes
-            fillButton = new JToggleButton("Fill", false);
+🟦 Fill option for shapes
 
-            // Create and configure the thickness slider
-            JSlider thicknessSlider = new JSlider(JSlider.HORIZONTAL, 1, 20, currentThickness);
-            thicknessSlider.setMajorTickSpacing(5);
-            thicknessSlider.setMinorTickSpacing(1);
-            thicknessSlider.setPaintTicks(true);
-            thicknessSlider.setPaintLabels(true);
+👁 Live shape preview while dragging the mouse
 
-            // Action listener for the color button
-            colorButton.addActionListener(e -> {
-                Color newColor = JColorChooser.showDialog(
-                        frame,
-                        "Choose a drawing color",
-                        currentColor
-                );
-                if (newColor != null) {
-                    currentColor = newColor;
-                    eraseButton.setSelected(false);
-                    isErasing = false;
-                    shapeSelector.setEnabled(true);
-                    fillButton.setEnabled(true);
-                }
-            });
+🖼 Uses an off-screen BufferedImage for smooth drawing
 
-            // Action listener for the eraser toggle button
-            eraseButton.addActionListener(e -> {
-                isErasing = eraseButton.isSelected();
-                if (isErasing) {
-                    shapeSelector.setEnabled(false);
-                    fillButton.setEnabled(false);
-                    // Automatically switch to freehand mode for erasing
-                    shapeSelector.setSelectedItem("Freehand");
-                    drawingMode = "freehand";
-                } else {
-                    shapeSelector.setEnabled(true);
-                    fillButton.setEnabled(true);
-                }
-            });
+🛠 Technologies Used
 
-            // Item listener for the shape selector JComboBox
-            shapeSelector.addItemListener(e -> {
-                String selected = (String) shapeSelector.getSelectedItem();
-                drawingMode = selected.toLowerCase();
-            });
-            
-            // Action listener for fill button
-            fillButton.addActionListener(e -> isFilling = fillButton.isSelected());
+Java
 
-            // Change listener for the thickness slider
-            thicknessSlider.addChangeListener(e -> {
-                JSlider source = (JSlider) e.getSource();
-                if (!source.getValueIsAdjusting()) {
-                    currentThickness = source.getValue();
-                }
-            });
+Java Swing
 
-            controls.add(colorButton);
-            controls.add(eraseButton);
-            controls.add(new JSeparator(SwingConstants.VERTICAL));
-            controls.add(new JLabel("Shape:"));
-            controls.add(shapeSelector);
-            controls.add(fillButton);
-            controls.add(new JLabel("Thickness:"));
-            controls.add(thicknessSlider);
+AWT Graphics
 
-            // Add the controls panel and drawing area to the frame
-            frame.add(controls, BorderLayout.NORTH);
-            frame.add(drawArea, BorderLayout.CENTER);
+BufferedImage
 
-            frame.setVisible(true);
-        });
-    }
+Mouse & Event Handling
 
-    private static class DrawArea extends JPanel {
-        private BufferedImage canvas;
-        private Point lastPoint;
-        private Point startPoint;
-        private Point endPoint;
+🚀 How to Run the Project
 
-        public DrawArea() {
-            canvas = new BufferedImage(800, 600, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = canvas.createGraphics();
-            g2d.setColor(BACKGROUND_COLOR);
-            g2d.fillRect(0, 0, 800, 600);
-            g2d.dispose();
+Clone the repository
 
-            addMouseMotionListener(new MouseAdapter() {
-                @Override
-                public void mouseDragged(MouseEvent e) {
-                    if (drawingMode.equals("freehand")) {
-                        if (lastPoint != null) {
-                            Graphics2D g2d = (Graphics2D) canvas.getGraphics();
-                            g2d.setStroke(new BasicStroke(currentThickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-                            if (isErasing) {
-                                g2d.setColor(BACKGROUND_COLOR);
-                            } else {
-                                g2d.setColor(currentColor);
-                            }
-                            g2d.drawLine(lastPoint.x, lastPoint.y, e.getX(), e.getY());
-                            g2d.dispose();
-                            repaint();
-                        }
-                        lastPoint = e.getPoint();
-                    } else { // For shapes
-                        endPoint = e.getPoint();
-                        repaint(); // Repaint to show the shape preview
-                    }
-                }
-            });
+git clone https://github.com/your-username/swing-paint.git
 
-            addMouseListener(new MouseAdapter() {
-                @Override
-                public void mousePressed(MouseEvent e) {
-                    if (drawingMode.equals("freehand")) {
-                        lastPoint = e.getPoint();
-                    } else { // For shapes
-                        startPoint = e.getPoint();
-                        endPoint = e.getPoint();
-                    }
-                }
 
-                @Override
-                public void mouseReleased(MouseEvent e) {
-                    if (drawingMode.equals("freehand")) {
-                        lastPoint = null;
-                    } else { // For shapes
-                        endPoint = e.getPoint();
-                        drawShape(startPoint, endPoint);
-                        startPoint = null;
-                        endPoint = null;
-                        repaint();
-                    }
-                }
-            });
-        }
+Navigate to the project folder
 
-        private void drawShape(Point p1, Point p2) {
-            Graphics2D g2d = (Graphics2D) canvas.getGraphics();
-            g2d.setStroke(new BasicStroke(currentThickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
-            g2d.setColor(currentColor);
+cd swing-paint
 
-            int x = Math.min(p1.x, p2.x);
-            int y = Math.min(p1.y, p2.y);
-            int width = Math.abs(p1.x - p2.x);
-            int height = Math.abs(p1.y - p2.y);
 
-            if (drawingMode.equals("rectangle")) {
-                if (isFilling) {
-                    g2d.fillRect(x, y, width, height);
-                } else {
-                    g2d.drawRect(x, y, width, height);
-                }
-            } else if (drawingMode.equals("oval")) {
-                if (isFilling) {
-                    g2d.fillOval(x, y, width, height);
-                } else {
-                    g2d.drawOval(x, y, width, height);
-                }
-            }
-            g2d.dispose();
-        }
+Compile the program
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            g.drawImage(canvas, 0, 0, null);
+javac SwingPaint.java
 
-            // Draw shape preview while dragging
-            if (!drawingMode.equals("freehand") && startPoint != null && endPoint != null) {
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setColor(currentColor);
-                g2d.setStroke(new BasicStroke(currentThickness, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
 
-                int x = Math.min(startPoint.x, endPoint.x);
-                int y = Math.min(startPoint.y, endPoint.y);
-                int width = Math.abs(startPoint.x - endPoint.x);
-                int height = Math.abs(startPoint.y - endPoint.y);
+Run the application
 
-                if (drawingMode.equals("rectangle")) {
-                    if (isFilling) {
-                        g2d.fillRect(x, y, width, height);
-                    } else {
-                        g2d.drawRect(x, y, width, height);
-                    }
-                } else if (drawingMode.equals("oval")) {
-                    if (isFilling) {
-                        g2d.fillOval(x, y, width, height);
-                    } else {
-                        g2d.drawOval(x, y, width, height);
-                    }
-                }
-            }
-        }
-    }
-}
+java SwingPaint
 
+🧩 Controls Overview
+Control	Description
+Select Color	Choose drawing color
+Eraser	Erase drawings (freehand only)
+Shape Selector	Switch between Freehand, Rectangle, Oval
+Fill Button	Fill shapes with selected color
+Thickness Slider	Adjust stroke thickness
+🖥 Application Workflow
+
+Select a color
+
+Choose a drawing mode
+
+Adjust thickness
+
+Click and drag on the canvas to draw
+
+Enable Fill for solid shapes
+
+Use Eraser to remove content
+
+📂 Project Structure
+SwingPaint.java
+
+
+SwingPaint – Main application class
+
+DrawArea – Custom JPanel handling drawing logic
+
+Uses BufferedImage as a drawing canvas
+
+🎯 Learning Outcomes
+
+Understanding Java Swing layouts and components
+
+Handling mouse events for drawing applications
+
+Working with Graphics2D and custom painting
+
+Implementing UI controls like sliders, toggle buttons, and combo boxes
+
+📸 Screenshots (Optional)
+
+Add screenshots here to visually demonstrate the application.
+
+📜 License
+
+This project is open-source and available for educational purposes.
+
+🤝 Contributions
+
+Feel free to fork this repository and improve the application by adding:
+
+Save/Open functionality
+
+Undo/Redo
+
+More shapes
+
+Zoom support
+
+⭐ If you like this project, don’t forget to star the repository!
